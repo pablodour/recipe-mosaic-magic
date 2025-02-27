@@ -4,22 +4,9 @@
 
 @layer base {
   :root {
-    /* New Color Palette */
-    --primary-color: #899D5E;
-    --secondary-color: #916A4F;
-    --accent-color: #803A3A;
-    
-    /* Lighter and Darker Variants for Improved Readability */
-    --primary-light: #A6B883;  /* lighter version of primary */
-    --primary-dark:  #6E7E43;   /* darker version of primary */
-    --secondary-light: #A98468; /* lighter version of secondary */
-    --secondary-dark:  #7B5039;  /* darker version of secondary */
-    --accent-light: #964747;    /* lighter version of accent */
-    --accent-dark:  #662E2E;     /* darker version of accent */
-
-    /* Existing Variables */
-    --background: 30 25% 98%;
-    --foreground: 24 10% 10%;
+    /* Overall Palette (Light Mode) */
+    --background: 30 25% 98%; /* light background */
+    --foreground: 24 10% 10%; /* dark text */
 
     --card: 30 25% 98%;
     --card-foreground: 24 10% 10%;
@@ -27,17 +14,20 @@
     --popover: 0 0% 100%;
     --popover-foreground: 24 10% 10%;
 
-    --primary: 24 10% 10%;
-    --primary-foreground: 30 25% 98%;
+    /* New Palette Integration for Light Mode:
+       For light mode, components (like buttons or cards) use a darker variant for backgrounds and light text on top. */
+    --primary: 79 25% 30%;          /* Dark variant of #899D5E */
+    --primary-foreground: 79 25% 90%; /* Light text for readability */
 
-    --secondary: 24 5% 90%;
-    --secondary-foreground: 24 10% 10%;
+    --secondary: 25 30% 30%;          /* Dark variant of #916A4F (~hsl(25,30%,30%)) */
+    --secondary-foreground: 25 30% 90%; /* Light text on secondary */
 
+    --accent: 0 38% 25%;             /* Dark variant of #803A3A (~hsl(0,38%,25%)) */
+    --accent-foreground: 0 38% 90%;    /* Light accent text */
+
+    /* Unchanged or existing values */
     --muted: 24 5% 90%;
     --muted-foreground: 24 5% 45%;
-
-    --accent: 24 10% 90%;
-    --accent-foreground: 24 10% 10%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -45,33 +35,12 @@
     --border: 24 5% 85%;
     --input: 24 5% 85%;
     --ring: 24 5% 80%;
-
-    --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
   .dark {
-    /* Maintain new palette in dark mode (adjust these if needed for contrast) */
-    --primary-color: #899D5E;
-    --secondary-color: #916A4F;
-    --accent-color: #803A3A;
-    --primary-light: #A6B883;
-    --primary-dark:  #6E7E43;
-    --secondary-light: #A98468;
-    --secondary-dark:  #7B5039;
-    --accent-light: #964747;
-    --accent-dark:  #662E2E;
-
-    --background: 24 10% 10%;
-    --foreground: 30 25% 98%;
+    /* Dark Mode – reverse contrasts compared to light mode */
+    --background: 24 10% 10%; /* dark background */
+    --foreground: 30 25% 98%;  /* light text */
 
     --card: 24 10% 10%;
     --card-foreground: 30 25% 98%;
@@ -79,17 +48,19 @@
     --popover: 24 10% 10%;
     --popover-foreground: 30 25% 98%;
 
-    --primary: 30 25% 98%;
-    --primary-foreground: 24 10% 10%;
+    /* In dark mode, use the lighter variants for component backgrounds */
+    --primary: 79 25% 90%;          /* Light variant of #899D5E */
+    --primary-foreground: 79 25% 30%; /* Dark text for contrast */
 
-    --secondary: 24 5% 20%;
-    --secondary-foreground: 30 25% 98%;
+    --secondary: 25 30% 90%;          /* Light variant of #916A4F */
+    --secondary-foreground: 25 30% 30%; /* Dark text on secondary */
 
+    --accent: 0 38% 90%;             /* Light variant of #803A3A */
+    --accent-foreground: 0 38% 25%;    /* Dark text for accent elements */
+
+    /* Unchanged or existing values */
     --muted: 24 5% 20%;
     --muted-foreground: 24 5% 65%;
-
-    --accent: 24 5% 20%;
-    --accent-foreground: 30 25% 98%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 30 25% 98%;
@@ -99,6 +70,7 @@
     --ring: 24 5% 65%;
   }
 }
+
 
 @layer base {
   * {
