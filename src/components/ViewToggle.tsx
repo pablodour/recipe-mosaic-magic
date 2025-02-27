@@ -1,5 +1,3 @@
-
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { LayoutGrid, List } from "lucide-react";
@@ -44,16 +42,13 @@ const ViewToggle = ({ view, onViewChange, className }: ViewToggleProps) => {
         className="absolute top-1 bottom-1 rounded-md bg-background shadow-sm"
         initial={false}
         animate={{
-          x: view === "list" ? 0 : "100%",
-          width: view === "list" ? "50%" : "50%",
+          x: view === "list" ? 0 : "50%",
+          width: "50%"
         }}
         transition={{
           type: "spring",
           stiffness: 500,
           damping: 30
-        }}
-        style={{
-          translateX: view === "list" ? 0 : "calc(100% - 100%)",
         }}
       />
     </div>
