@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { DietaryCategory } from "@/data/recipes";
 import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
+import { X, SlidersHorizontal } from "lucide-react";
 
 interface FilterControlsProps {
   onFilterChange: (filters: {
@@ -19,6 +19,7 @@ const FilterControls = ({ onFilterChange }: FilterControlsProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [maxCookingTime, setMaxCookingTime] = useState(180);
   const [selectedCategories, setSelectedCategories] = useState<DietaryCategory[]>([]);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const dietaryCategories: DietaryCategory[] = ["vegetarian", "vegan", "pescatarian", "carnivore"];
 
@@ -43,6 +44,10 @@ const FilterControls = ({ onFilterChange }: FilterControlsProps) => {
     });
   };
 
+  const toggleFilters = () => {
+    setIsExpanded(prev => !prev);
+  };
+
   // Apply filters immediately when any filter changes
   useEffect(() => {
     onFilterChange({
@@ -53,10 +58,19 @@ const FilterControls = ({ onFilterChange }: FilterControlsProps) => {
   }, [searchTerm, maxCookingTime, selectedCategories, onFilterChange]);
 
   return (
-    <div className="bg-card border border-border rounded-lg p-4 md:p-6 mb-8 animate-fade-in shadow-sm">
-      <div className="flex flex-col space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <h3 className="font-medium text-lg">Filter Recipes</h3>
+    <div className="mb-8 animate-fade-in">
+      <div className="flex justify-between items-center mb-2">
+        <Button 
+          onClick={toggleFilters}
+          variant="outline"
+          className="flex items-center gap-2"
+          size="sm"
+        >
+          <SlidersHorizontal size={16} />
+          {isExpanded ? "Hide Filters" : "Show Filters"}
+        </Button>
+        
+        {isExpanded && (
           <Button 
             variant="ghost" 
             size="sm" 
@@ -65,60 +79,66 @@ const FilterControls = ({ onFilterChange }: FilterControlsProps) => {
           >
             <X size={16} className="mr-1" /> Clear All
           </Button>
-        </div>
+        )}
+      </div>
 
-        <div className="space-y-4">
-          <div>
-            <label htmlFor="search" className="block text-sm font-medium mb-1 text-muted-foreground">
-              Search by title
-            </label>
-            <Input 
-              id="search"
-              type="text" 
-              placeholder="Search recipes..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="max-w-full md:max-w-xs"
-            />
-          </div>
+      {isExpanded && (
+        <div className="bg-card border border-border rounded-lg p-4 md:p-6 shadow-sm transition-all duration-300 ease-in-out">
+          <div className="flex flex-col space-y-6">
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="search" className="block text-sm font-medium mb-1 text-muted-foreground">
+                  Search by title
+                </label>
+                <Input 
+                  id="search"
+                  type="text" 
+                  placeholder="Search recipes..." 
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="max-w-full md:max-w-xs"
+                />
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2 text-muted-foreground">
-              Max cooking time: {maxCookingTime} minutes
-            </label>
-            <Slider 
-              value={[maxCookingTime]} 
-              min={5}
-              max={180}
-              step={5}
-              onValueChange={(value) => setMaxCookingTime(value[0])}
-              className="max-w-full md:max-w-md"
-            />
-          </div>
+              <div>
+                <label className="block text-sm font-medium mb-2 text-muted-foreground">
+                  Max cooking time: {maxCookingTime} minutes
+                </label>
+                <Slider 
+                  value={[maxCookingTime]} 
+                  min={5}
+                  max={180}
+                  step={5}
+                  onValueChange={(value) => setMaxCookingTime(value[0])}
+                  className="max-w-full md:max-w-md"
+                />
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium mb-2 text-muted-foreground">
-              Dietary preferences
-            </label>
-            <div className="flex flex-wrap gap-2">
-              {dietaryCategories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => handleCategoryToggle(category)}
-                  className={cn(
-                    "px-3 py-1 rounded-full text-sm font-medium transition-colors",
-                    selectedCategories.includes(category)
-                      ? "bg-primary text-primary-foreground"
-                      : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
-                  )}
-                >
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </button>
-              ))}
+              <div>
+                <label className="block text-sm font-medium mb-2 text-muted-foreground">
+                  Dietary preferences
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  {dietaryCategories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => handleCategoryToggle(category)}
+                      className={cn(
+                        "px-3 py-1 rounded-full text-sm font-medium transition-colors",
+                        selectedCategories.includes(category)
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                      )}
+                    >
+                      {category.charAt(0).toUpperCase() + category.slice(1)}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

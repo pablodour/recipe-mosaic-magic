@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { LayoutGrid, List } from "lucide-react";
 
 interface ViewToggleProps {
   view: "list" | "collage";
@@ -19,29 +20,41 @@ const ViewToggle = ({ view, onViewChange, className }: ViewToggleProps) => {
     >
       <button
         className={cn(
-          "relative z-10 flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-          view === "list" ? "text-foreground" : "text-muted-foreground"
+          "relative z-10 flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-md",
+          view === "list" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
         )}
         onClick={() => onViewChange("list")}
         aria-pressed={view === "list"}
       >
-        List
+        <List size={16} />
+        <span>List</span>
       </button>
       <button
         className={cn(
-          "relative z-10 flex items-center justify-center px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-          view === "collage" ? "text-foreground" : "text-muted-foreground"
+          "relative z-10 flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring rounded-md",
+          view === "collage" ? "text-foreground" : "text-muted-foreground hover:text-foreground"
         )}
         onClick={() => onViewChange("collage")}
         aria-pressed={view === "collage"}
       >
-        Collage
+        <LayoutGrid size={16} />
+        <span>Collage</span>
       </button>
-      <div 
-        className={cn(
-          "absolute top-1 left-1 bottom-1 rounded-md bg-background shadow-sm transition-transform duration-200",
-          view === "list" ? "translate-x-0 w-[72px]" : "translate-x-[72px] w-[90px]"
-        )}
+      <motion.div 
+        className="absolute top-1 bottom-1 rounded-md bg-background shadow-sm"
+        initial={false}
+        animate={{
+          x: view === "list" ? 0 : "100%",
+          width: view === "list" ? "50%" : "50%",
+        }}
+        transition={{
+          type: "spring",
+          stiffness: 500,
+          damping: 30
+        }}
+        style={{
+          translateX: view === "list" ? 0 : "calc(100% - 100%)",
+        }}
       />
     </div>
   );
