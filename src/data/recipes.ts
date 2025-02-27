@@ -13,7 +13,21 @@ export interface Recipe {
   ingredients: string[];
   instructions: string[];
   image: string;
+  collageSize?: 'small' | 'medium' | 'large';
 }
+
+// Template images for recipes
+const templateImages = [
+  "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?q=80&w=1000",  // Food plate with vegetables
+  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=1000",  // Pizza
+  "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=1000",  // Healthy bowl
+  "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=1000",  // Pasta dish
+  "https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?q=80&w=1000",  // Pancakes
+  "https://images.unsplash.com/photo-1565958011703-44f9829ba187?q=80&w=1000",  // Seafood dish
+  "https://images.unsplash.com/photo-1484723091739-30a097e8f929?q=80&w=1000",  // Breakfast toast
+  "https://images.unsplash.com/photo-1529042410759-befb1204b468?q=80&w=1000",  // Beef dish
+  "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=1000",  // Vegetarian dish
+];
 
 export const recipes: Recipe[] = [
   {
@@ -42,7 +56,7 @@ export const recipes: Recipe[] = [
       'Arrange tomato slices on top of the avocado.',
       'Drizzle with olive oil and sprinkle with additional salt, pepper, and red pepper flakes if desired.'
     ],
-    image: '/images/avocado-toast.jpg'
+    image: templateImages[6]
   },
   {
     id: '2',
@@ -73,7 +87,7 @@ export const recipes: Recipe[] = [
       'Bake for 12-15 minutes until the salmon is cooked through and the crust is golden.',
       'Serve with lemon wedges.'
     ],
-    image: '/images/herb-salmon.jpg'
+    image: templateImages[5]
   },
   {
     id: '3',
@@ -113,7 +127,7 @@ export const recipes: Recipe[] = [
       'Add the mushrooms and onions to the stew for the last 30 minutes of cooking.',
       'Adjust seasoning, remove bouquet garni, and garnish with fresh parsley before serving.'
     ],
-    image: '/images/beef-bourguignon.jpg'
+    image: templateImages[7]
   },
   {
     id: '4',
@@ -149,7 +163,7 @@ export const recipes: Recipe[] = [
       'Warm tortillas in a dry skillet or directly over a gas flame.',
       'Assemble tacos with roasted cauliflower, avocado crema, pickled onions, and fresh cilantro.'
     ],
-    image: '/images/cauliflower-tacos.jpg'
+    image: templateImages[2]
   },
   {
     id: '5',
@@ -184,7 +198,7 @@ export const recipes: Recipe[] = [
       'Pour dressing over the quinoa mixture and toss to combine.',
       'Serve at room temperature or chilled.'
     ],
-    image: '/images/quinoa-bowl.jpg'
+    image: templateImages[0]
   },
   {
     id: '6',
@@ -215,6 +229,6 @@ export const recipes: Recipe[] = [
       'Remove steaks from pan and let rest for 5 minutes before serving.',
       'Serve with the garlic butter sauce from the pan and garnish with fresh parsley.'
     ],
-    image: '/images/garlic-steak.jpg'
+    image: templateImages[3]
   }
 ];

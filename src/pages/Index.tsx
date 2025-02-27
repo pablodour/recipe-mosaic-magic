@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import ViewToggle from "@/components/ViewToggle";
 import RecipeCard from "@/components/RecipeCard";
 import RecipeTile from "@/components/RecipeTile";
@@ -59,6 +59,23 @@ const Index = () => {
     
     setFilteredRecipes(results);
   };
+
+  // Create a memoized array of recipes with random sizes and shuffled order for collage view
+  const collageRecipes = useMemo(() => {
+    const sizesArray: ("small" | "medium" | "large")[] = ["small", "medium", "large"];
+    
+    // Create a copy of filtered recipes and add a random size property to each
+    const recipesWithSizes = filteredRecipes.map(recipe => {
+      const randomSize = sizesArray[Math.floor(Math.random() * sizesArray.length)];
+      return { 
+        ...recipe, 
+        collageSize: randomSize 
+      };
+    });
+    
+    // Shuffle the array for random order
+    return recipesWithSizes.sort(() => Math.random() - 0.5);
+  }, [filteredRecipes]);
 
   const handleViewChange = (newView: "list" | "collage") => {
     setView(newView);
@@ -125,8 +142,12 @@ const Index = () => {
               </div>
             ) : (
               <div className="recipe-mosaic animate-fade-in">
-                {filteredRecipes.map((recipe) => (
-                  <RecipeTile key={recipe.id} recipe={recipe} />
+                {collageRecipes.map((recipe) => (
+                  <RecipeTile 
+                    key={recipe.id} 
+                    recipe={recipe} 
+                    size={recipe.collageSize as "small" | "medium" | "large"}
+                  />
                 ))}
               </div>
             )}
