@@ -6,10 +6,9 @@ import CategoryBadge from "./CategoryBadge";
 
 interface RecipeTileProps {
   recipe: Recipe;
-  size?: "small" | "medium" | "large";
 }
 
-const RecipeTile = ({ recipe, size = "medium" }: RecipeTileProps) => {
+const RecipeTile = ({ recipe }: RecipeTileProps) => {
   const navigate = useNavigate();
   const [imageLoaded, setImageLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -27,16 +26,9 @@ const RecipeTile = ({ recipe, size = "medium" }: RecipeTileProps) => {
     navigate(`/recipe/${recipe.id}`);
   };
 
-  // Apply different classes based on the random size
-  const sizeClasses = {
-    small: "aspect-square",
-    medium: "aspect-[4/3]",
-    large: "aspect-[16/9]",
-  };
-
   return (
     <div 
-      className={`group cursor-pointer relative overflow-hidden rounded-lg ${sizeClasses[size]} shadow-sm hover:shadow-md transition-all`}
+      className="group cursor-pointer relative overflow-hidden rounded-lg aspect-square shadow-sm hover:shadow-md transition-all"
       onClick={handleClick}
     >
       <img
