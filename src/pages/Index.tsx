@@ -3,20 +3,73 @@ import { useState, useEffect } from "react";
 import ViewToggle from "@/components/ViewToggle";
 import RecipeCard from "@/components/RecipeCard";
 import RecipeTile from "@/components/RecipeTile";
-import { recipes } from "@/data/recipes";
+import FilterControls from "@/components/FilterControls";
+import { recipes, DietaryCategory } from "@/data/recipes";
 import { CookingPot } from "lucide-react";
 
 const Index = () => {
   const [view, setView] = useState<"list" | "collage">("list");
   const [mounted, setMounted] = useState(false);
+  const [filteredRecipes, setFilteredRecipes] = useState(recipes);
+  const [filters, setFilters] = useState({
+    searchTerm: "",
+    maxCookingTime: 180,
+    categories: [] as DietaryCategory[],
+  });
+  const [hasActiveFilters, setHasActiveFilters] = useState(false);
 
   useEffect(() => {
     setMounted(true);
     return () => setMounted(false);
   }, []);
 
+  useEffect(() => {
+    applyFilters();
+    
+    // Check if any filters are active
+    setHasActiveFilters(
+      filters.searchTerm !== "" || 
+      filters.maxCookingTime < 180 || 
+      filters.categories.length > 0
+    );
+  }, [filters]);
+
+  const applyFilters = () => {
+    let results = [...recipes];
+    
+    // Filter by search term
+    if (filters.searchTerm) {
+      const searchTermLower = filters.searchTerm.toLowerCase();
+      results = results.filter(recipe => 
+        recipe.title.toLowerCase().includes(searchTermLower)
+      );
+    }
+    
+    // Filter by cooking time (total cooking + prep time)
+    results = results.filter(recipe => 
+      (recipe.cookingTime + recipe.prepTime) <= filters.maxCookingTime
+    );
+    
+    // Filter by dietary category
+    if (filters.categories.length > 0) {
+      results = results.filter(recipe => 
+        filters.categories.includes(recipe.category)
+      );
+    }
+    
+    setFilteredRecipes(results);
+  };
+
   const handleViewChange = (newView: "list" | "collage") => {
     setView(newView);
+  };
+
+  const handleFilterChange = (newFilters: {
+    searchTerm: string;
+    maxCookingTime: number;
+    categories: DietaryCategory[];
+  }) => {
+    setFilters(newFilters);
   };
 
   return (
@@ -45,18 +98,39 @@ const Index = () => {
           </p>
         </div>
 
-        {view === "list" ? (
-          <div className="recipe-grid animate-fade-in">
-            {recipes.map((recipe) => (
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            ))}
+        <FilterControls onFilterChange={handleFilterChange} />
+
+        {filteredRecipes.length === 0 ? (
+          <div className="text-center py-12 bg-card rounded-lg shadow-sm">
+            <h3 className="text-xl font-medium mb-2">No recipes found</h3>
+            <p className="text-muted-foreground">
+              Try adjusting your filters to find more recipes.
+            </p>
           </div>
         ) : (
-          <div className="recipe-mosaic animate-fade-in">
-            {recipes.map((recipe) => (
-              <RecipeTile key={recipe.id} recipe={recipe} />
-            ))}
-          </div>
+          <>
+            {hasActiveFilters && (
+              <div className="mb-6">
+                <p className="text-sm text-muted-foreground">
+                  Showing {filteredRecipes.length} {filteredRecipes.length === 1 ? 'recipe' : 'recipes'}
+                </p>
+              </div>
+            )}
+
+            {view === "list" ? (
+              <div className="recipe-grid animate-fade-in">
+                {filteredRecipes.map((recipe) => (
+                  <RecipeCard key={recipe.id} recipe={recipe} />
+                ))}
+              </div>
+            ) : (
+              <div className="recipe-mosaic animate-fade-in">
+                {filteredRecipes.map((recipe) => (
+                  <RecipeTile key={recipe.id} recipe={recipe} />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </main>
 
