@@ -1,10 +1,23 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
+    /* New Color Palette */
+    --primary-color: #899D5E;
+    --secondary-color: #916A4F;
+    --accent-color: #803A3A;
+    
+    /* Lighter and Darker Variants for Improved Readability */
+    --primary-light: #A6B883;  /* lighter version of primary */
+    --primary-dark:  #6E7E43;   /* darker version of primary */
+    --secondary-light: #A98468; /* lighter version of secondary */
+    --secondary-dark:  #7B5039;  /* darker version of secondary */
+    --accent-light: #964747;    /* lighter version of accent */
+    --accent-dark:  #662E2E;     /* darker version of accent */
+
+    /* Existing Variables */
     --background: 30 25% 98%;
     --foreground: 24 10% 10%;
 
@@ -46,6 +59,17 @@
   }
 
   .dark {
+    /* Maintain new palette in dark mode (adjust these if needed for contrast) */
+    --primary-color: #899D5E;
+    --secondary-color: #916A4F;
+    --accent-color: #803A3A;
+    --primary-light: #A6B883;
+    --primary-dark:  #6E7E43;
+    --secondary-light: #A98468;
+    --secondary-dark:  #7B5039;
+    --accent-light: #964747;
+    --accent-dark:  #662E2E;
+
     --background: 24 10% 10%;
     --foreground: 30 25% 98%;
 
@@ -88,7 +112,7 @@
 
 @layer utilities {
   .recipe-card-transition {
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
                 box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
@@ -106,6 +130,37 @@
 
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Utility Classes for New Color Palette */
+  .text-primary-color {
+    color: var(--primary-color);
+  }
+  .bg-primary-color {
+    background-color: var(--primary-color);
+  }
+  .hover\:bg-primary-light:hover {
+    background-color: var(--primary-light);
+  }
+
+  .text-secondary-color {
+    color: var(--secondary-color);
+  }
+  .bg-secondary-color {
+    background-color: var(--secondary-color);
+  }
+  .hover\:bg-secondary-light:hover {
+    background-color: var(--secondary-light);
+  }
+
+  .text-accent-color {
+    color: var(--accent-color);
+  }
+  .bg-accent-color {
+    background-color: var(--accent-color);
+  }
+  .hover\:bg-accent-light:hover {
+    background-color: var(--accent-light);
   }
 }
 
