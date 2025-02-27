@@ -83,10 +83,10 @@ const FilterControls = ({ onFilterChange }: FilterControlsProps) => {
       </div>
 
       {isExpanded && (
-        <div className="bg-card border border-border rounded-lg p-4 md:p-6 shadow-sm transition-all duration-300 ease-in-out">
-          <div className="flex flex-col space-y-6">
-            <div className="space-y-4">
-              <div>
+        <div className="bg-card border border-border rounded-lg p-4 shadow-sm transition-all duration-300 ease-in-out max-w-2xl mx-auto">
+          <div className="flex flex-col items-center space-y-6">
+            <div className="space-y-4 w-full max-w-md">
+              <div className="text-center">
                 <label htmlFor="search" className="block text-sm font-medium mb-1 text-muted-foreground">
                   Search by title
                 </label>
@@ -96,11 +96,11 @@ const FilterControls = ({ onFilterChange }: FilterControlsProps) => {
                   placeholder="Search recipes..." 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="max-w-full md:max-w-xs"
+                  className="max-w-full"
                 />
               </div>
 
-              <div>
+              <div className="text-center">
                 <label className="block text-sm font-medium mb-2 text-muted-foreground">
                   Max cooking time: {maxCookingTime} minutes
                 </label>
@@ -110,15 +110,15 @@ const FilterControls = ({ onFilterChange }: FilterControlsProps) => {
                   max={180}
                   step={5}
                   onValueChange={(value) => setMaxCookingTime(value[0])}
-                  className="max-w-full md:max-w-md"
+                  className="max-w-full"
                 />
               </div>
 
-              <div>
+              <div className="text-center">
                 <label className="block text-sm font-medium mb-2 text-muted-foreground">
                   Dietary preferences
                 </label>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap justify-center gap-2">
                   {dietaryCategories.map((category) => (
                     <button
                       key={category}
